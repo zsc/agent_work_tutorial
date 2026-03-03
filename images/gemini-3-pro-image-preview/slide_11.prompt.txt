@@ -1,0 +1,11 @@
+16:9 slide, cinematic minimal style, title: **“别停在‘差不多’：继续推到底”**
+Visual: human figure holding a small glowing “wish” spark; beside it a larger translucent agent avatar amplifying the light forward into a path.
+Short Chinese lines (big, sparse):
+
+* **“初步答案 ≠ 终点”**
+* **“好奇心与坚持，才是稀缺能力”**
+  Soft gradient background, elegant, no clutter.
+
+---
+
+如果你想要我再进一步帮你：我可以把这套 prompts 直接“压成你组会常见的 8 页版本”（更短、更适合 10–15 分钟），或者按你习惯的主题色（深色/浅色、公司配色）重新统一视觉风格。

@@ -1,0 +1,9 @@
+16:9 slide, clean infographic layout, white background, bold title top-left: **“核心：不是提示词玄学，而是‘环境’”**
+Main visual: a big balance scale. Left pan labeled **“提示词”** (small), right pan labeled **“环境/工具链/流程”** (big and heavier).
+Right side has 4 small icon bullets with short Chinese labels:
+
+* **磁盘空间** (disk icon)
+* **关键 CLI 工具** (wrench/terminal icon)
+* **GPU/网络** (chip/network icon)
+* **目录与版本控制** (folder/git icon)
+  Flat vector style, subtle shadows, consistent accent colors.

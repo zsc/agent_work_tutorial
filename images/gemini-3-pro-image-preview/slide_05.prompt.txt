@@ -1,0 +1,8 @@
+16:9 slide, title: **“Git：你的长期记忆系统（状态持久化）”**
+Main visual: a commit timeline running left-to-right with nodes, branch lines, tags.
+Three callout boxes with icons and Chinese text:
+
+* **记录过程：改动可追踪**
+* **可回滚：随时回到可用状态**
+* **多尝试并行：分支/工作树管理**
+  Style: clean vector, subtle depth, accent blue for main branch.

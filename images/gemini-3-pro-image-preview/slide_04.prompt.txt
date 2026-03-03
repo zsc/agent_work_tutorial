@@ -1,0 +1,6 @@
+16:9 slide, flowchart style. Title: **“文件格式：尽量文本化，减少黑箱摩擦”**
+Flow:
+**Markdown → HTML（带资源文件夹）→ 单文件 HTML（base64 内嵌）→ IM/跨机分享**
+Use simple rounded rectangles and arrows, with small icons (md, html, image, message).
+Side note box: **“PDF/Word：适合交付，不适合协作中间态”**
+Clean diagram, lots of whitespace, no dense text.

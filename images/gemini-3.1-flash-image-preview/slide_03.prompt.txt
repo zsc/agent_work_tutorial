@@ -1,0 +1,5 @@
+16:9 slide, split-screen comparison layout. Title: **“命令行：人与 Agent 的低摩擦主界面”**
+Left panel labeled **“GUI”**: messy windows, mouse cursor, upload dialog, friction indicators (tiny “×” symbols).
+Right panel labeled **“CLI”**: clean terminal window with neat commands, checkmarks, arrows showing fast flow.
+Bottom row: 4 keywords in Chinese with icons: **文本化 / 可组合 / 可复制 / 可自动化**.
+Modern vector, minimal, readable.

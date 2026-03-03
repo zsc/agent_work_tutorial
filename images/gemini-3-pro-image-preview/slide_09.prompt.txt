@@ -1,0 +1,4 @@
+16:9 slide, title: **“现实坑位：代理费、下载流量、环境膨胀”**
+Main visual: a pipeline showing “Hugging Face 下载” through a red “Proxy quota” funnel (expensive, slow), then alternative green path labeled **“hf-mirror / no_proxy”** (fast, cheap).
+Side box: **“预设 conda 环境：避免 venv/uv 层层套娃占满磁盘”**
+Use caution triangle icons; clean vector infographic.

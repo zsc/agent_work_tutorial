@@ -1,0 +1,102 @@
+{
+  "generated_at": "2026-03-03T05:25:04.722744+00:00",
+  "prompts_path": "prompts.md",
+  "prompt_format": "prompts_md",
+  "prompt_count": 11,
+  "models": [
+    {
+      "name": "models/gemini-3-pro-image-preview",
+      "dir": "images/gemini-3-pro-image-preview"
+    }
+  ],
+  "slides": [
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 1,
+      "image_path": "images/gemini-3-pro-image-preview/slide_01.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_01.prompt.txt",
+      "prompt_title": "封面",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 2,
+      "image_path": "images/gemini-3-pro-image-preview/slide_02.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_02.prompt.txt",
+      "prompt_title": "核心观点：关键不是提示词，是环境",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 3,
+      "image_path": "images/gemini-3-pro-image-preview/slide_03.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_03.prompt.txt",
+      "prompt_title": "为什么 CLI 是最高效协作界面",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 4,
+      "image_path": "images/gemini-3-pro-image-preview/slide_04.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_04.prompt.txt",
+      "prompt_title": "文件格式策略：Markdown/HTML 优先，PDF/Word 降摩擦",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 5,
+      "image_path": "images/gemini-3-pro-image-preview/slide_05.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_05.prompt.txt",
+      "prompt_title": "Git：把‘高产导致失忆’变成可追踪",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 6,
+      "image_path": "images/gemini-3-pro-image-preview/slide_06.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_06.prompt.txt",
+      "prompt_title": "输入方式：打字到极限 → 语音减负",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 7,
+      "image_path": "images/gemini-3-pro-image-preview/slide_07.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_07.prompt.txt",
+      "prompt_title": "上下文共享：Markdown 作为“共享内存”",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 8,
+      "image_path": "images/gemini-3-pro-image-preview/slide_08.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_08.prompt.txt",
+      "prompt_title": "生命周期管理：Ctrl+Z / fg / resume / 软链接",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 9,
+      "image_path": "images/gemini-3-pro-image-preview/slide_09.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_09.prompt.txt",
+      "prompt_title": "实际坑位：代理/镜像/下载/Conda 环境",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 10,
+      "image_path": "images/gemini-3-pro-image-preview/slide_10.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_10.prompt.txt",
+      "prompt_title": "监控：tmux 多窗格 + GPU 使用率是硬指标",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 11,
+      "image_path": "images/gemini-3-pro-image-preview/slide_11.jpg",
+      "prompt_path": "images/gemini-3-pro-image-preview/slide_11.prompt.txt",
+      "prompt_title": "收尾：别被“初步答案”麻醉；愿望驱动更稀缺",
+      "mime_type": "image/jpeg"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+16:9 slide, title: **“上下文共享：Markdown = 共享内存”**
+Central graphic: a big “.md” document with neatly styled headings and bullet sections, lines connecting to multiple small “agent” avatars around it.
+Two columns with labels:
+左列：**项目事实记录**（magic numbers、URLs、参数、坑位与限制）
+右列：**可复用内容块**（模板、cheat sheet、skill 片段）
+Add a tiny note: **“要写上下文：是什么 / 为什么 / 何时用 / 注意点”**
+Vector, structured, high readability.

@@ -1,0 +1,5 @@
+**16:9 presentation slide**, modern minimal tech style, white background with subtle light-gray grid, accent color #2F6BFF and #FFB020.
+Center large title in Chinese: **“如何高效使用 Agent：构造适合人机协作的工作环境”**
+Subtitle smaller: **“命令行 · Markdown · Git · 监控 · 长期协作”**
+Visual: abstract “human silhouette + agent avatar” made of simple lines and circuit traces, connected by dotted paths; small icons floating (terminal, git branch, markdown).
+Clean vector illustration, high contrast, lots of whitespace, no watermark, no logos.

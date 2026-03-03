@@ -1,0 +1,5 @@
+16:9 slide, title: **“监控与轻量干预：tmux 是朋友”**
+Visual: stylized tmux screen with 4 panes (logs, top, nvidia-smi, file tree).
+A GPU meter showing **“GPU idle”** turning into active usage after a small side comment bubble: **“GPU idle，检查 CUDA 路径”**
+Bottom row: small icons + labels: **不打断主线程 / 旁路检查 / 多 agent 协作但要隔离目录**
+Modern tech style, clean.

@@ -1,0 +1,5 @@
+16:9 slide, title: **“输入方式升级：别让身体成为瓶颈”**
+Visual metaphor: left side a tired hand over keyboard with “10天/2周高强度”小字；right side a microphone with waveform, calm posture.
+Include small Mac hint badge: **“macOS：双击 Fn 触发语音输入（可先编辑转写）”**
+Bottom 3 icons + labels: **省体力 / 更连续表达 / 更高密度交流**
+Modern, friendly, minimal.

@@ -1,0 +1,6 @@
+16:9 slide, title: **“生命周期：挂后台、切前台、恢复会话、跨时间接续”**
+Show a simple sequence diagram:
+Terminal → (Ctrl+Z) → background agent → you install tool → (fg) → agent continues
+Second mini-diagram: **resume** arrow to “旧会话上下文”；旁边一个 chain icon labeled **“软链接保持路径可恢复”**
+Include warning callout: **“你动了目录/文件：要明确告诉 agent，避免困惑”**
+Clean diagram, minimal text.
