@@ -18,18 +18,72 @@ PROMPTS_MD_SECTION_REGEX = re.compile(
 )
 FENCED_CODE_BLOCK_REGEX = re.compile(r"```[^\n]*\n([\s\S]*?)\n```", flags=re.MULTILINE)
 
-SECTION_NUM_TO_SLIDE: dict[str, int] = {
-    "一": 2,
-    "二": 3,
-    "三": 4,
-    "四": 5,
-    "五": 6,
-    "六": 7,
-    "七": 8,
+ASCII_TOKEN_RE = re.compile(r"[a-z0-9][a-z0-9_-]{1,}")
+CJK_SEQ_RE = re.compile(r"[\u4e00-\u9fff]{2,}")
+
+CN_DIGITS: dict[str, int] = {
+    "零": 0,
+    "〇": 0,
+    "一": 1,
+    "二": 2,
+    "两": 2,
+    "三": 3,
+    "四": 4,
+    "五": 5,
+    "六": 6,
+    "七": 7,
+    "八": 8,
     "九": 9,
-    "十二": 10,
-    "十四": 11,
 }
+
+STOPWORDS = {
+    "agent",
+    "agents",
+    "agentic",
+    "workflow",
+    "问题",
+    "方法",
+    "方法论",
+    "核心",
+    "阶段",
+    "我们",
+    "如何",
+    "什么",
+    "为什么",
+    "不是",
+    "一个",
+    "以及",
+    "一些",
+    "可以",
+    "需要",
+    "真正",
+}
+
+SYNONYM_REPLACEMENTS: list[tuple[str, str]] = [
+    ("报告", "report"),
+    ("Report", "report"),
+    ("report", "report"),
+    ("规格", "spec"),
+    ("Spec", "spec"),
+    ("spec", "spec"),
+    ("上下文", "context"),
+    ("Context", "context"),
+    ("context", "context"),
+    ("命令行", "cli"),
+    ("CLI", "cli"),
+    ("cli", "cli"),
+    ("图形界面", "gui"),
+    ("界面", "gui"),
+    ("GUI", "gui"),
+    ("gui", "gui"),
+    ("结论", "summary"),
+    ("总结", "summary"),
+    ("要点", "summary"),
+    ("Takeaways", "summary"),
+    ("takeaways", "summary"),
+    ("结尾", "ending"),
+    ("结束语", "ending"),
+]
 
 
 @dataclass(frozen=True)
@@ -114,7 +168,7 @@ def parse_talk_md(path: Path) -> tuple[str, list[TalkSection]]:
     intro_end = section_starts[0] if section_starts else len(lines)
     intro_md = "\n".join(lines[:intro_end]).strip()
     if intro_md:
-        sections.append(TalkSection(anchor="sec-00", heading="开场", body_md=intro_md, slide=1))
+        sections.append(TalkSection(anchor="sec-00", heading="开场", body_md=intro_md, slide=None))
 
     for idx, start_idx in enumerate(section_starts):
         end_idx = section_starts[idx + 1] if idx + 1 < len(section_starts) else len(lines)
@@ -122,11 +176,261 @@ def parse_talk_md(path: Path) -> tuple[str, list[TalkSection]]:
         body_md = "\n".join(lines[start_idx + 1 : end_idx]).strip()
 
         section_num = _extract_section_num(heading)
-        slide = SECTION_NUM_TO_SLIDE.get(section_num) if section_num else None
+        slide = None
         anchor = f"sec-{len(sections):02d}"
         sections.append(TalkSection(anchor=anchor, heading=heading, body_md=body_md, slide=slide))
 
     return title, sections
+
+
+def _cn_numeral_to_int(text: str) -> int | None:
+    s = text.strip()
+    if not s:
+        return None
+    if s.isdigit():
+        return int(s)
+    if any(ch not in CN_DIGITS and ch not in {"十"} for ch in s):
+        return None
+    if s == "十":
+        return 10
+
+    if "十" not in s:
+        # Single digit.
+        if len(s) == 1 and s in CN_DIGITS:
+            return CN_DIGITS[s]
+        return None
+
+    parts = s.split("十")
+    if len(parts) != 2:
+        return None
+    left, right = parts[0], parts[1]
+    tens = 1 if left == "" else CN_DIGITS.get(left)
+    if tens is None:
+        return None
+    ones = 0 if right == "" else CN_DIGITS.get(right)
+    if ones is None:
+        return None
+    return tens * 10 + ones
+
+
+def _extract_section_int(heading: str) -> int | None:
+    section_num = _extract_section_num(heading)
+    if not section_num:
+        return None
+    return _cn_numeral_to_int(section_num)
+
+
+def _parse_move_after_spec(spec: str) -> tuple[list[int], int]:
+    raw = spec.strip()
+    if ":" not in raw:
+        raise SystemExit(f"Invalid --move-after value: {spec!r}. Expected format like '8,9:4'.")
+    left, right = raw.split(":", 1)
+    move_raw = [s.strip() for s in left.split(",") if s.strip()]
+    if not move_raw:
+        raise SystemExit(f"Invalid --move-after value: {spec!r}. Missing move section list.")
+    move_nums: list[int] = []
+    for s in move_raw:
+        n = _cn_numeral_to_int(s)
+        if n is None:
+            raise SystemExit(f"Invalid --move-after value: {spec!r}. Bad section number: {s!r}.")
+        move_nums.append(n)
+    after_n = _cn_numeral_to_int(right.strip())
+    if after_n is None:
+        raise SystemExit(f"Invalid --move-after value: {spec!r}. Bad after-section number: {right.strip()!r}.")
+    return move_nums, after_n
+
+
+def move_sections_after(*, sections: list[TalkSection], move_numbers: list[int], after_number: int) -> list[TalkSection]:
+    move_set = set(move_numbers)
+    if not move_set:
+        return sections
+
+    to_move: list[TalkSection] = []
+    remaining: list[TalkSection] = []
+    for sec in sections:
+        n = _extract_section_int(sec.heading)
+        if n is not None and n in move_set:
+            to_move.append(sec)
+        else:
+            remaining.append(sec)
+
+    if not to_move:
+        return sections
+
+    insert_after_idx: int | None = None
+    for i, sec in enumerate(remaining):
+        n = _extract_section_int(sec.heading)
+        if n == after_number:
+            insert_after_idx = i
+            break
+
+    if insert_after_idx is None:
+        return remaining + to_move
+
+    return remaining[: insert_after_idx + 1] + to_move + remaining[insert_after_idx + 1 :]
+
+
+def _int_to_cn_numeral(n: int) -> str:
+    if n <= 0:
+        raise ValueError("n must be positive")
+    digits = {1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六", 7: "七", 8: "八", 9: "九"}
+    if n < 10:
+        return digits[n]
+    if n == 10:
+        return "十"
+    if n < 20:
+        return "十" + digits[n - 10]
+    if n < 100:
+        tens, ones = divmod(n, 10)
+        out = digits[tens] + "十"
+        if ones:
+            out += digits[ones]
+        return out
+    raise ValueError("n too large for Chinese numeral conversion")
+
+
+HEADING_NUMBER_PREFIX_RE = re.compile(r"^([一二三四五六七八九十〇零两0-9]+)、\s*(.*)$")
+
+
+def renumber_headings(sections: list[TalkSection]) -> list[TalkSection]:
+    counter = 0
+    out: list[TalkSection] = []
+    for sec in sections:
+        m = HEADING_NUMBER_PREFIX_RE.match(sec.heading.strip())
+        if not m:
+            out.append(sec)
+            continue
+        counter += 1
+        rest = m.group(2).strip()
+        new_heading = f"{_int_to_cn_numeral(counter)}、{rest}"
+        out.append(TalkSection(anchor=sec.anchor, heading=new_heading, body_md=sec.body_md, slide=sec.slide))
+    return out
+
+
+def _normalize_for_match(text: str) -> str:
+    t = text
+    for src, dst in SYNONYM_REPLACEMENTS:
+        t = t.replace(src, f" {dst} ")
+    t = t.lower()
+    # Normalize punctuation to spaces.
+    t = re.sub(r"[\t\r\n\u3000]+", " ", t)
+    t = re.sub(r"[`~!@#$%^&*()\-_=+\[\]{}\\|;:'\",.<>/?，。、《》【】（）“”‘’：；？！…—–→←]+", " ", t)
+    t = re.sub(r"\s+", " ", t).strip()
+    return t
+
+
+def _extract_match_tokens(text: str) -> set[str]:
+    t = _normalize_for_match(text)
+    tokens: set[str] = set()
+
+    for m in ASCII_TOKEN_RE.finditer(t):
+        tok = m.group(0)
+        if tok in STOPWORDS:
+            continue
+        tokens.add(tok)
+
+    for m in CJK_SEQ_RE.finditer(t):
+        seq = m.group(0)
+        if seq in STOPWORDS:
+            continue
+        # Always include short seqs as-is.
+        if len(seq) <= 4:
+            tokens.add(seq)
+            continue
+        # For long CJK sequences, include n-grams up to length 4 to improve matching.
+        for n in range(2, 5):
+            for i in range(0, len(seq) - n + 1):
+                sub = seq[i : i + n]
+                if sub in STOPWORDS:
+                    continue
+                tokens.add(sub)
+
+    return tokens
+
+
+def _score_tokens(a: set[str], b: set[str]) -> int:
+    score = 0
+    for tok in a.intersection(b):
+        # Favor longer matches while keeping short meaningful phrases usable.
+        score += len(tok) * len(tok)
+    return score
+
+
+def _guess_slide_for_section(
+    *,
+    heading: str,
+    prompts: dict[int, PromptInfo],
+    exclude_slides: set[int],
+    min_score: int = 8,
+) -> int | None:
+    heading_tokens = _extract_match_tokens(heading)
+    if not heading_tokens:
+        return None
+
+    best_slide: int | None = None
+    best_score = 0
+
+    for slide_no, p in prompts.items():
+        if slide_no in exclude_slides:
+            continue
+        prompt_tokens = _extract_match_tokens(p.title)
+        score = _score_tokens(heading_tokens, prompt_tokens)
+        if score > best_score:
+            best_score = score
+            best_slide = slide_no
+
+    if best_slide is None or best_score < min_score:
+        return None
+    return best_slide
+
+
+def apply_auto_slide_mapping(*, sections: list[TalkSection], prompts: dict[int, PromptInfo]) -> list[TalkSection]:
+    used_slides: set[int] = set()
+    assigned_by_section: dict[int, int] = {}
+
+    # Prefer using Prompt 1 (cover) for the intro section, if present.
+    for i, sec in enumerate(sections):
+        if i == 0 and sec.heading == "开场" and 1 in prompts:
+            assigned_by_section[i] = 1
+            used_slides.add(1)
+            break
+
+    prompt_tokens_by_slide = {slide: _extract_match_tokens(p.title) for slide, p in prompts.items()}
+    section_tokens_by_index = {i: _extract_match_tokens(sec.heading) for i, sec in enumerate(sections)}
+
+    candidates: list[tuple[int, int, int]] = []  # (score, section_idx, slide_no)
+    for sec_idx, sec in enumerate(sections):
+        if sec_idx in assigned_by_section:
+            continue
+        sec_tokens = section_tokens_by_index.get(sec_idx) or set()
+        if not sec_tokens:
+            continue
+        for slide_no, prompt_tokens in prompt_tokens_by_slide.items():
+            if slide_no in used_slides:
+                continue
+            score = _score_tokens(sec_tokens, prompt_tokens)
+            if score > 0:
+                candidates.append((score, sec_idx, slide_no))
+
+    # Greedy max-score matching (unique slide per section, unique section per slide).
+    candidates.sort(key=lambda x: (-x[0], x[1], x[2]))
+
+    min_score = 8
+    for score, sec_idx, slide_no in candidates:
+        if score < min_score:
+            break
+        if sec_idx in assigned_by_section:
+            continue
+        if slide_no in used_slides:
+            continue
+        assigned_by_section[sec_idx] = slide_no
+        used_slides.add(slide_no)
+
+    mapped: list[TalkSection] = []
+    for i, sec in enumerate(sections):
+        slide = assigned_by_section.get(i)
+        mapped.append(TalkSection(anchor=sec.anchor, heading=sec.heading, body_md=sec.body_md, slide=slide))
+    return mapped
 
 
 def render_md(md_text: str) -> str:
@@ -214,6 +518,12 @@ def main(argv: list[str]) -> int:
         help="Build prompts-only reading page (ignore talk.md).",
     )
     parser.add_argument(
+        "--move-after",
+        action="append",
+        default=[],
+        help="Reorder talk sections: '8,9:4' moves sections 8 and 9 to after section 4 (Arabic digits or Chinese numerals).",
+    )
+    parser.add_argument(
         "--embed-images",
         action=argparse.BooleanOptionalAction,
         default=False,
@@ -232,6 +542,12 @@ def main(argv: list[str]) -> int:
         if not args.talk.exists():
             raise SystemExit(f"Missing {args.talk}. Pass --no-talk to build prompts-only reading page.")
         title, sections = parse_talk_md(args.talk)
+        sections = apply_auto_slide_mapping(sections=sections, prompts=prompts)
+        for spec in args.move_after:
+            move_nums, after_n = _parse_move_after_spec(spec)
+            sections = move_sections_after(sections=sections, move_numbers=move_nums, after_number=after_n)
+        if args.move_after:
+            sections = renumber_headings(sections)
     else:
         title = args.prompts.parent.name if args.prompts.parent.name else args.prompts.stem
         sections = [
@@ -518,6 +834,20 @@ def main(argv: list[str]) -> int:
         padding: 18px 0 30px;
       }}
     </style>
+    <script>
+      // Render LaTeX math in markdown using MathJax (supports $...$ and $$...$$).
+      window.MathJax = {{
+        tex: {{
+          inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+          displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+          processEscapes: true
+        }},
+        options: {{
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }}
+      }};
+    </script>
+    <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
   <body>
     <header>

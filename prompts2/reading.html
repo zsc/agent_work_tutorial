@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>prompts2</title>
+    <title>演讲题目</title>
     <style>
       :root {
         --bg: #0b0d12;
@@ -203,12 +203,26 @@
         padding: 18px 0 30px;
       }
     </style>
+    <script>
+      // Render LaTeX math in markdown using MathJax (supports $...$ and $$...$$).
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      };
+    </script>
+    <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
   <body>
     <header>
       <div class="container topbar">
         <div>
-          <h1>prompts2</h1>
+          <h1>演讲题目</h1>
           <div class="meta">generated_at: 2026-03-04T10:31:33.589024+00:00</div>
         </div>
         <div class="controls">
@@ -222,54 +236,312 @@
       <nav class="toc">
         <h2>目录</h2>
         <ol>
-          <li><a href="#sec-00">Prompt 1：封面（Cover）</a></li>
-<li><a href="#sec-01">Prompt 2：第一性指标——周转时间（Turnaround Time）</a></li>
-<li><a href="#sec-02">Prompt 3：规格模块化 > 代码复用（Spec > Code）</a></li>
-<li><a href="#sec-03">Prompt 4：先文本内核，后 GUI 薄层（CLI-first, GUI-last）</a></li>
-<li><a href="#sec-04">Prompt 5：Context Programming / 上下文工程（Docs + Code + Tools）</a></li>
-<li><a href="#sec-05">Prompt 6：闭环迭代（Spec → Work → Report → Next Spec）</a></li>
-<li><a href="#sec-06">Prompt 7：并行度甜蜜点（3–5 路并行）</a></li>
-<li><a href="#sec-07">Prompt 8：总结表格（Key Takeaways Table）</a></li>
+          <li><a href="#sec-00">开场</a></li>
+<li><a href="#sec-01">一、第一性问题：周转时间决定一切</a></li>
+<li><a href="#sec-02">二、先做文本内核，再做 GUI 薄层</a></li>
+<li><a href="#sec-03">三、模块化设计很重要，但更重要的是“规格的模块化”</a></li>
+<li><a href="#sec-04">四、所谓 Context Programming，本质上是给 agent 搭建工作记忆</a></li>
+<li><a href="#sec-08">五、双机、远程与分布式：SSH 是效率基础设施</a></li>
+<li><a href="#sec-09">六、并行当然重要，但多数项目的有效并行度是有限的</a></li>
+<li><a href="#sec-05">七、报告不是附属品，而是 agent 工作流中的核心产物</a></li>
+<li><a href="#sec-06">八、真正的闭环：Spec → Work → Report → New Spec</a></li>
+<li><a href="#sec-07">九、Agent 时代的“快乐的悲伤”：想法队列终于开始被清空</a></li>
+<li><a href="#sec-10">十、它为什么让我想起人类论文发表和科研社区</a></li>
+<li><a href="#sec-11">十一、我的阶段性结论：我们真正需要的，是一种新的研发秩序</a></li>
+<li><a href="#sec-12">十二、结尾：未来不是“有没有 agent”，而是“有没有方法”</a></li>
+<li><a href="#sec-13">可直接用于演讲的简短结束语</a></li>
         </ol>
       </nav>
 
-      <section class="section" id="sec-00"><h2>Prompt 1：封面（Cover）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="1" href="#"><img class="slide-img" data-slide="1" alt="Slide 01｜封面（Cover）" loading="lazy" /></a><figcaption>Slide 01｜封面（Cover）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, clean modern tech style, white background with subtle light-gray grid texture, accent colors teal and navy, flat vector illustration.
+      <section class="section" id="sec-00"><h2>开场</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="1" href="#"><img class="slide-img" data-slide="1" alt="Slide 01｜封面（Cover）" loading="lazy" /></a><figcaption>Slide 01｜封面（Cover）</figcaption><details class="prompt"><summary>Prompt</summary><pre>16:9 PPT slide, 1920x1080, clean modern tech style, white background with subtle light-gray grid texture, accent colors teal and navy, flat vector illustration.
 Layout: large title area centered, minimalist geometric shapes, small flowing “agent nodes” network pattern in the background (dots connected by thin lines).
 Add only big Chinese title text (no small text):
 “Agentic Workflow 方法论”
 Below it, smaller subtitle:
 “规格驱动 · 上下文增强 · 报告闭环 · 有限并行 · 资源感知”
-Use Chinese sans-serif typography (Source Han Sans / 思源黑体 feel), high legibility, lots of whitespace.
-</code></pre></article></section>
-<section class="section" id="sec-01"><h2>Prompt 2：第一性指标——周转时间（Turnaround Time）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="2" href="#"><img class="slide-img" data-slide="2" alt="Slide 02｜第一性指标——周转时间（Turnaround Time）" loading="lazy" /></a><figcaption>Slide 02｜第一性指标——周转时间（Turnaround Time）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, flat vector, white background, teal/navy accents, minimalist icons.
+Use Chinese sans-serif typography (Source Han Sans / 思源黑体 feel), high legibility, lots of whitespace.</pre></details></figure><p><strong>我这几天对 Agentic Workflow 的观察、实验与思考</strong></p>
+<p>各位好，</p>
+<p>今天我想分享的主题，是我这几天围绕 <strong>agentic workflow</strong> 所做的一些密集实验，以及由此得到的一些相对系统的认识。</p>
+<p>这里我讲的，不只是“某个模型强不强”，也不只是“某个 agent 工具好不好用”。
+我真正想讨论的是：<strong>当我们把 AI agent 当作协作对象，而不只是问答对象时，工作流到底应该怎么组织？它的效率边界在哪里？它真正适合什么，又不适合什么？</strong></p>
+<p>这几天里，我刻意尝试了很多不同类型的任务，希望从一个比较广的角度，去理解当前 agentic workflow 的能力和短板。
+我做过的事情包括：</p>
+<ul>
+<li>单机上的软件开发流程</li>
+<li>带 UI 的程序构建</li>
+<li>两台机器之间通过 SSH 协作</li>
+<li>分布式机器上的任务调度与运行</li>
+<li>Android App 的编写</li>
+<li>文档和书稿的写作</li>
+<li>通过 SSH 操作开发板和设备</li>
+<li>训练 GPU 上的任务</li>
+<li>以及各种探索性实验</li>
+</ul>
+<p>这些任务横跨软件、系统、文档、设备和研究式探索。
+所以我今天的分享，不是某个单点技巧，而更像是一个阶段性的结论：<strong>agentic workflow 的效率，更多取决于任务组织方式，而不是单纯取决于模型参数。</strong></p>
+<hr></article></section>
+<section class="section" id="sec-01"><h2>一、第一性问题：周转时间决定一切</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="2" href="#"><img class="slide-img" data-slide="2" alt="Slide 02｜第一性指标——周转时间（Turnaround Time）" loading="lazy" /></a><figcaption>Slide 02｜第一性指标——周转时间（Turnaround Time）</figcaption><details class="prompt"><summary>Prompt</summary><pre>16:9 PPT slide, 1920x1080, flat vector, white background, teal/navy accents, minimalist icons.
 Layout: left side big headline, right side infographic.
 Right infographic: a circular loop diagram with 4 steps and arrows: “假设 → 执行 → 反馈 → 修正”, emphasize “周转时间” as a timer icon at the center.
 Add only big Chinese headline text on the left:
 “周转时间是第一性指标”
-Small supporting text area should be empty placeholders (no tiny text), leave space for speaker notes.
-</code></pre></article></section>
-<section class="section" id="sec-02"><h2>Prompt 3：规格模块化 > 代码复用（Spec > Code）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="3" href="#"><img class="slide-img" data-slide="3" alt="Slide 03｜规格模块化 > 代码复用（Spec > Code）" loading="lazy" /></a><figcaption>Slide 03｜规格模块化 > 代码复用（Spec > Code）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, clean vector infographic, white background, teal/navy accents.
-Layout: split into two vertical panels.
-Left panel labeled big: “复用代码（风险）” with a tangled spaghetti diagram + warning triangle icons.
-Right panel labeled big: “复用规格（友好）” with neat LEGO-like blocks labeled “目标/边界/约束/验收” stacked cleanly.
-Bottom center: a simple takeaway badge with big text “把复用上移到规格层”.
-Avoid dense paragraphs; only large Chinese labels, crisp icons.
-</code></pre></article></section>
-<section class="section" id="sec-03"><h2>Prompt 4：先文本内核，后 GUI 薄层（CLI-first, GUI-last）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="4" href="#"><img class="slide-img" data-slide="4" alt="Slide 04｜先文本内核，后 GUI 薄层（CLI-first, GUI-last）" loading="lazy" /></a><figcaption>Slide 04｜先文本内核，后 GUI 薄层（CLI-first, GUI-last）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, modern flat vector, white background.
+Small supporting text area should be empty placeholders (no tiny text), leave space for speaker notes.</pre></details></figure><p>我先讲我认为最核心的一点：
+<strong>人和 agent 协作时，最关键的指标不是单次能力，而是周转时间。</strong></p>
+<p>什么叫周转时间？
+就是你提出一个想法，agent 去执行，回来给你结果，你再修正，再继续下一轮——这一整个闭环所花的时间。</p>
+<p>为什么这个指标最重要？
+因为人和 agent 的协作，本质上是一个高频迭代过程。
+你真正的进展，不是来自某一次神来之笔，而是来自很多次非常密集的小迭代。
+所以，单位时间内你能完成多少轮“提出假设—执行—观察—修正”，几乎直接决定了你的总体产出。</p>
+<p>这件事在单机软件开发里体现得最明显。</p>
+<p>如果你做的是一个<strong>命令行程序</strong>，或者至少是一个<strong>可测试的文本界面程序</strong>，那么 agent 的效率会非常高。
+因为它可以直接：</p>
+<ul>
+<li>读代码</li>
+<li>改代码</li>
+<li>写测试</li>
+<li>跑程序</li>
+<li>观察输出</li>
+<li>根据输出继续修正</li>
+</ul>
+<p>这一整套循环非常顺滑。
+它不需要额外理解复杂视觉界面，不需要在 GUI 里东点西点，不需要长时间等待人工反馈。
+所以在这种场景下，agent 的迭代速度非常快，快到会让人明显感觉：<strong>很多事情不再是“能不能做”，而是“多快能做到一个像样版本”。</strong></p>
+<p>而一旦你进入 GUI 场景，情况就变了。</p>
+<hr></article></section>
+<section class="section" id="sec-02"><h2>二、先做文本内核，再做 GUI 薄层</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="4" href="#"><img class="slide-img" data-slide="4" alt="Slide 04｜先文本内核，后 GUI 薄层（CLI-first, GUI-last）" loading="lazy" /></a><figcaption>Slide 04｜先文本内核，后 GUI 薄层（CLI-first, GUI-last）</figcaption><details class="prompt"><summary>Prompt</summary><pre>16:9 PPT slide, 1920x1080, modern flat vector, white background.
 Layout: an MVC-inspired schematic.
 Center: a solid rectangle “文本内核（Model/Controller）” with terminal icon + test checkmarks.
 Around it: thin outer frame labeled “GUI/View 薄层” with simple window icon.
 Arrows show building order: first core, then wrap UI.
 Big headline top-left: “先做文本内核，后包 GUI 薄层”
-Keep text large, minimal, and correctly spaced.
-</code></pre></article></section>
-<section class="section" id="sec-04"><h2>Prompt 5：Context Programming / 上下文工程（Docs + Code + Tools）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="5" href="#"><img class="slide-img" data-slide="5" alt="Slide 05｜Context Programming / 上下文工程（Docs + Code + Tools）" loading="lazy" /></a><figcaption>Slide 05｜Context Programming / 上下文工程（Docs + Code + Tools）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, flat vector, white background with subtle paper texture.
+Keep text large, minimal, and correctly spaced.</pre></details></figure><p>我第二个重要观察是：
+<strong>对 agent 来说，文本空间远比视觉和图形交互空间高效。</strong></p>
+<p>GUI 当然不是不能做。
+现在很多模型也已经有了视觉理解能力，某些系统在这方面甚至做得不错。
+但总体来说，只要任务进入 GUI 层，问题就会显著复杂化：</p>
+<ul>
+<li>视觉理解会引入误差</li>
+<li>界面状态不稳定</li>
+<li>操作路径更长</li>
+<li>验证成本更高</li>
+<li>整体周转时间会明显上升</li>
+</ul>
+<p>所以我后来总结出一个非常实用的方法论：</p>
+<p><strong>先把程序的核心逻辑做成文本内核，等基本稳定以后，再让 agent 去补一层 GUI。</strong></p>
+<p>这个思路，其实很像软件工程里经典的 MVC，也就是 Model-View-Controller 的分层思路。</p>
+<p>从 agent 的角度看：</p>
+<ul>
+<li><strong>Model</strong> 可以主要留在文本和代码层</li>
+<li><strong>Controller</strong> 也可以主要留在文本和测试层</li>
+<li>真正必须落在 GUI 中的，往往主要是 <strong>View</strong></li>
+</ul>
+<p>也就是说，如果你把系统的大部分逻辑都压缩在可测试、可脚本化、可自动验证的文本空间里，那么 agent 的工作效率就会非常高。
+最后你再补一个相对薄的视图层，把已经成熟的核心逻辑包装成 GUI，这时 agent 往往也不会觉得很突兀，它会自然地顺着前面的结构继续完成。</p>
+<p>我甚至觉得，这种做法不仅仅是“适配 agent”，它本身也是一种更理性的工程流程：
+<strong>不要过早把系统暴露给 GUI 的复杂性。</strong></p>
+<p>先赢下核心逻辑，再处理界面表达。</p>
+<hr></article></section>
+<section class="section" id="sec-03"><h2>三、模块化设计很重要，但更重要的是“规格的模块化”</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="3" href="#"><img class="slide-img" data-slide="3" alt="Slide 03｜规格模块化 > 代码复用（Spec > Code）" loading="lazy" /></a><figcaption>Slide 03｜规格模块化 > 代码复用（Spec > Code）</figcaption><details class="prompt"><summary>Prompt</summary><pre>16:9 PPT slide, 1920x1080, clean vector infographic, white background, teal/navy accents.
+Layout: split into two vertical panels.
+Left panel labeled big: “复用代码（风险）” with a tangled spaghetti diagram + warning triangle icons.
+Right panel labeled big: “复用规格（友好）” with neat LEGO-like blocks labeled “目标/边界/约束/验收” stacked cleanly.
+Bottom center: a simple takeaway badge with big text “把复用上移到规格层”.
+Avoid dense paragraphs; only large Chinese labels, crisp icons.</pre></details></figure><p>接下来我想讲第三点，这一点我觉得特别关键。</p>
+<p>以前我们一提到“模块化”，很容易想到代码模块化。
+但这几天我的感受是：
+<strong>对于 agent 协作而言，规格的模块化，往往比代码的模块化更重要。</strong></p>
+<p>为什么这么说？</p>
+<p>因为代码复用虽然看起来高效，但很多时候，复用的不只是功能，还复用了很多历史包袱：</p>
+<ul>
+<li>旧环境的依赖</li>
+<li>局部成立的假设</li>
+<li>当时为了应急加进去的 workaround</li>
+<li>某个项目里合理、换个场景却不合理的结构</li>
+</ul>
+<p>这些东西对人类工程师来说，可能还能一点点拆开理解；
+但对 agent 来说，它更容易把现有代码整体当成“既定现实”，然后在这个现实上继续堆叠。
+于是问题就来了：你以为你是在复用，实际上你可能是在把旧项目的隐含约束偷偷带进新项目。</p>
+<p>相比之下，<strong>规格复用</strong>就干净得多。</p>
+<p>所谓规格，我这里说的不是那种空泛的需求文档，而是更贴近执行层的东西，比如：</p>
+<ul>
+<li>目标是什么</li>
+<li>输入输出是什么</li>
+<li>约束条件是什么</li>
+<li>当前已知发现是什么</li>
+<li>不要走哪些路</li>
+<li>哪些方法试过了，结果如何</li>
+<li>目前最有希望的方向是什么</li>
+</ul>
+<p>这种东西一旦写清楚，agent 就很容易围绕它重新组织实现。
+它不需要继承旧代码里的所有细节，只需要继承你已经提炼出来的认识。</p>
+<p>所以我现在越来越倾向于这样一种流程：</p>
+<p>对于一个稍微复杂一点的项目，不是直接把大量代码一股脑丢给 agent，而是先把每个 mini-project 的关键结论、边界、经验教训，<strong>结晶成独立 markdown 文档</strong>。
+这些文档就像一个个“可复用的规格模块”。
+后续你再把这些文档组合起来，让 agent 基于这些规格去做整体设计，效果往往比简单拼接旧代码更好。</p>
+<p>换句话说：</p>
+<p><strong>代码模块化解决的是实现复用问题；
+规格模块化解决的是认知复用问题。</strong></p>
+<p>而在 agent 时代，后者的价值正在迅速上升。</p>
+<hr></article></section>
+<section class="section" id="sec-04"><h2>四、所谓 Context Programming，本质上是给 agent 搭建工作记忆</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="5" href="#"><img class="slide-img" data-slide="5" alt="Slide 05｜Context Programming / 上下文工程（Docs + Code + Tools）" loading="lazy" /></a><figcaption>Slide 05｜Context Programming / 上下文工程（Docs + Code + Tools）</figcaption><details class="prompt"><summary>Prompt</summary><pre>16:9 PPT slide, 1920x1080, flat vector, white background with subtle paper texture.
 Layout: right side “context bundle” illustration: a stack of documents labeled “Markdown 文档”, “芯片/开发板资料”, “工具链源码”, “示例代码”.
 Left side: a friendly robot/agent icon with a “reading” posture, arrows from the document stack to the agent brain.
 Big headline: “Context Programming：给 agent 铺认知地基”
-No small paragraphs; leave a blank text box area for later overlay.
-</code></pre></article></section>
-<section class="section" id="sec-05"><h2>Prompt 6：闭环迭代（Spec → Work → Report → Next Spec）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="6" href="#"><img class="slide-img" data-slide="6" alt="Slide 06｜闭环迭代（Spec → Work → Report → Next Spec）" loading="lazy" /></a><figcaption>Slide 06｜闭环迭代（Spec → Work → Report → Next Spec）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, crisp vector loop diagram, white background, teal/navy accents.
+No small paragraphs; leave a blank text box area for later overlay.</pre></details></figure><p>我接下来讲第四点：<strong>context programming</strong>。</p>
+<p>这其实是我这几天特别有感触的一个方向。</p>
+<p>很多时候，问题不是 agent 没能力，而是 agent 缺上下文。
+尤其当你处理的是一些非通用、非公开、强领域性的任务时，这一点会被放大得非常明显。</p>
+<p>举个例子：</p>
+<p>假设你要让 agent 帮你设计一个 dev board，里面用到某个 MPU。
+如果这个 MPU 是业界公开、资料丰富的器件，那还好。
+但如果它是你们内部设计的，或者它依赖某套很特殊的工具链，或者它周边还有一堆私有规范，那 agent 不可能凭空知道这些东西。</p>
+<p>这时候，真正有效的方法不是只给它一句 prompt，而是<strong>把必要的上下文系统性地喂给它</strong>。</p>
+<p>比如：</p>
+<ul>
+<li>相关文档转成 markdown</li>
+<li>重要接口、寄存器说明整理成清晰文本</li>
+<li>工具链的关键源码直接提供给它</li>
+<li>现有样例工程和参考实现一起给它</li>
+<li>约束条件、失败历史、已知坑点明确写出来</li>
+</ul>
+<p>为什么 Markdown 很好？
+因为它结构清晰，文本可解析性强，绝大多数 agent 对这种格式的吸收效果都很好。
+为什么源码也很好？
+因为 agent 对代码的理解能力本来就很强，很多时候你甚至不需要“解释源码”，直接给它看，它自己就能从中提取规律。</p>
+<p>所以我现在对 context programming 的理解是：</p>
+<p><strong>它不是“给 agent 多一点材料”这么简单，
+而是在主动构建 agent 的工作记忆。</strong></p>
+<p>一个 agent 能做多复杂的事情，不仅取决于它的推理能力，也取决于你能不能把任务所需的领域知识，以它可消费的形式组织出来。</p>
+<p>也就是说：</p>
+<p><strong>模型的参数是它的先验能力；
+上下文的组织，是你给它搭建的临时认知系统。</strong></p>
+<p>这两者结合起来，才能真正把 agent 推到一个能工作的状态。</p>
+<hr></article></section>
+<section class="section" id="sec-08"><h2>五、双机、远程与分布式：SSH 是效率基础设施</h2><article class="notes"><p>接着我想讲一讲多机器协作。</p>
+<p>如果说单机上的关键是保持文本空间和测试空间的高效率，
+那么在双机或多机环境里，我觉得最关键的就是：<strong>稳定、低摩擦的 SSH 体系。</strong></p>
+<p>为什么我会这么强调 SSH？
+因为一旦你需要把 agent 的执行能力延伸到另一台机器、远程环境、开发板、服务器、训练节点上，SSH 往往就是最基础的通道。</p>
+<p>但不是说“能连上”就够了。
+真正重要的是：</p>
+<ul>
+<li>连接是否稳定</li>
+<li>登录是否繁琐</li>
+<li>环境是否能快速恢复</li>
+<li>机器是否可以处于待命状态</li>
+<li>新请求发过去是否需要重新排很多队</li>
+<li>更新和热修复是否顺滑</li>
+</ul>
+<p>这些东西会直接影响整个工作流的 turnaround time。</p>
+<p>如果每次你都要重新登录、重新准备环境、重新进目录、重新拉起必要进程，那么 agent 再聪明，也会被这些操作磨损掉效率。
+所以我会把远程机器理解为一种“随时待命的执行节点”。
+最理想的情况，是这些机器已经在一个基本可用的状态里，只等任务热启动，而不是每次从零开始。</p>
+<p>这个思路在分布式工作里尤其重要。
+你不应该每次都让新请求重新经历完整排队和准备流程。
+更好的方式，是让远端资源保持 warm，保持 standby，这样你就可以更快地进入真正有价值的计算和实验阶段。</p>
+<p>这里顺便补一句我觉得很容易被忽视的事：
+<strong>磁盘空间余量，真的很重要。</strong></p>
+<p>很多 agent 在逻辑、代码、文本上都表现不错，但对“系统资源正在接近极限”这件事，缺乏人类那种直觉。
+它未必能很好估计：</p>
+<ul>
+<li>某个程序实际要跑多久</li>
+<li>某个数据处理还会产生多少中间文件</li>
+<li>剩余磁盘是否足够</li>
+<li>什么时候应该主动清理</li>
+<li>哪些动作会因为资源紧张而走形</li>
+</ul>
+<p>所以如果机器空间太紧、时间预算太紧，agent 往往会开始出现不必要的折腾：
+它可能会花很多力气在清空间、猜测运行状态、反复尝试绕路，而不是执行最合理的主线任务。</p>
+<p>这提醒我们一件事：</p>
+<p><strong>人类在 agent workflow 中，仍然必须承担资源守门员的角色。</strong>
+资源余量、时间上界、运行监控，这些还远远没有完全自动化。</p>
+<hr></article></section>
+<section class="section" id="sec-09"><h2>六、并行当然重要，但多数项目的有效并行度是有限的</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="7" href="#"><img class="slide-img" data-slide="7" alt="Slide 07｜并行度甜蜜点（3–5 路并行）" loading="lazy" /></a><figcaption>Slide 07｜并行度甜蜜点（3–5 路并行）</figcaption><details class="prompt"><summary>Prompt</summary><pre>16:9 PPT slide, 1920x1080, modern flat vector, white background.
+Layout: a gauge / speedometer showing parallelism levels from 1 to 10.
+Highlight the green sweet spot at “3–5”.
+Add small visual metaphor: 3–5 worker agents collaborating with a human “driver” at a control panel, with clear task lanes.
+Big headline: “并行不是越多越好：3–5 路最稳”
+No dense text; emphasize the gauge and lanes.</pre></details></figure><p>接下来，我讲一下并行性。</p>
+<p>我最近也很受一个现象启发：有人说自己可以同时让十个 coding agents 协同工作。
+这件事当然很振奋，也很有吸引力。
+我自己也试着往这个方向靠近，想看看现实中能做到什么程度。</p>
+<p>结果是：
+<strong>并行确实非常重要，但它不是越多越好，也不是所有项目都适合高并行。</strong></p>
+<p>从我的实际体验来看，如果任务之间差异很大，比如：</p>
+<ul>
+<li>一个在写文档</li>
+<li>一个在写 Android App</li>
+<li>一个在做探索性技术问题验证</li>
+<li>一个在操作远程机器</li>
+<li>一个在整理报告</li>
+</ul>
+<p>那么并行度相对比较容易提上去。
+因为这些任务本身就相对独立，人只需要在高层协调即可。</p>
+<p>但如果你说的是“围绕同一个项目，让很多 agent 一起往前推”，那事情就没那么简单了。
+真正能有效并行推进的前提，是项目本身必须足够模块化，而且模块之间的依赖边界要清晰。</p>
+<p>有些项目天然适合并行。
+比如编译器、分章节写书、接口清楚的多模块系统。
+你甚至可以把某种中间表示、中间文件、标准接口，当成条件独立性的断点。
+谁负责前段，谁负责后段，谁负责测试，谁负责文档，这样并行就成立。</p>
+<p>但很多项目并没有这么整齐的边界。
+它们的依赖是纠缠的，状态是共享的，决策是相互影响的。
+在这种场景下，表面上开十个 agent，实际上可能只是：</p>
+<ul>
+<li>增加协调成本</li>
+<li>增加冲突</li>
+<li>增加上下文污染</li>
+<li>消耗更多 quota 和资源</li>
+<li>最后得到的有效进展并不比三四个 agent 明显高</li>
+</ul>
+<p>所以我现在的判断是：</p>
+<p><strong>对绝大多数普通项目来说，3 到 5 路高质量并行，已经是很有意义的规模。</strong>
+再往上不是不可能，但前提会非常苛刻：任务切分必须优秀，接口必须清楚，协调必须成熟。</p>
+<p>这其实也不奇怪。
+做过并行计算的人都知道，真正限制并行度的，从来不只是算力，而是依赖关系。
+Agent world 里也是一样。</p>
+<p>所以，比“我能不能同时开十个 agent”更重要的问题是：</p>
+<p><strong>我的项目有没有足够清晰的切分面？
+这些切分面能不能让不同 agent 真正相对独立地推进？</strong></p>
+<p>如果不能，那么盲目堆并行，只会制造热闹，不一定制造进展。</p>
+<hr></article></section>
+<section class="section" id="sec-05"><h2>七、报告不是附属品，而是 agent 工作流中的核心产物</h2><article class="notes"><p>再往下，我想讲第五点：<strong>让 agent 写报告，而且最好分节写。</strong></p>
+<p>这是我最近一个很明确的认识。</p>
+<p>很多人用 agent，习惯把输出停留在对话层。
+比如问一句，答一句；改一轮，看一轮。
+这在短任务里没问题，但一旦任务变长，问题就会出来：</p>
+<ul>
+<li>之前做了什么容易丢</li>
+<li>失败过什么容易忘</li>
+<li>哪个判断是中间猜测，哪个是已经验证的结论，容易混淆</li>
+<li>后面一轮对话很容易覆盖前面的重要发现</li>
+</ul>
+<p>所以我越来越觉得，<strong>report 不是锦上添花，而是 agent 工作的正式输出物。</strong></p>
+<p>尤其是长任务、复杂任务、研究式任务，它最终必须沉淀成报告。
+而且报告最好不是一整块流水账，而是分节、分层、可继承的。</p>
+<p>比如至少可以分成：</p>
+<ol>
+<li>当前任务目标</li>
+<li>已尝试的方法</li>
+<li>结果与现象</li>
+<li>失败原因或待确认问题</li>
+<li>当前最可信结论</li>
+<li>下一轮建议</li>
+</ol>
+<p>为什么要分节？
+因为分节会天然形成层级结构。
+后续你再看时，不是“从头再读一遍所有聊天记录”，而是可以快速定位。
+而且分节写法还能减少“新内容覆盖旧内容”的问题，让进展是累加的，而不是互相冲刷的。</p>
+<p>在我看来，这种 report 机制的价值至少有三层：</p>
+<ul>
+<li>它能帮助<strong>当前的人类操作者</strong>保持清醒</li>
+<li>它能帮助<strong>下一轮 agent</strong>迅速接上上下文</li>
+<li>它能帮助整个项目形成一种<strong>可审计、可继承、可迭代的知识结构</strong></li>
+</ul>
+<p>所以，如果问我：agent 最合适的输出形式是什么？
+我的答案越来越偏向于：<strong>结构化报告。</strong></p>
+<hr></article></section>
+<section class="section" id="sec-06"><h2>八、真正的闭环：Spec → Work → Report → New Spec</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="6" href="#"><img class="slide-img" data-slide="6" alt="Slide 06｜闭环迭代（Spec → Work → Report → Next Spec）" loading="lazy" /></a><figcaption>Slide 06｜闭环迭代（Spec → Work → Report → Next Spec）</figcaption><details class="prompt"><summary>Prompt</summary><pre>16:9 PPT slide, 1920x1080, crisp vector loop diagram, white background, teal/navy accents.
 Layout: a large horizontal pipeline loop:
 Box 1: “Spec v1”
 Box 2: “长任务/实验”
@@ -277,29 +549,195 @@ Box 3: “Report（分节）”
 Box 4: “Spec v2 / v3”
 Arrows connect as a continuous cycle; add a small “版本号上升” upward arrow on the side.
 Big headline: “用报告驱动下一版规格”
-Keep labels short and big; no tiny footnotes.
-</code></pre></article></section>
-<section class="section" id="sec-06"><h2>Prompt 7：并行度甜蜜点（3–5 路并行）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="7" href="#"><img class="slide-img" data-slide="7" alt="Slide 07｜并行度甜蜜点（3–5 路并行）" loading="lazy" /></a><figcaption>Slide 07｜并行度甜蜜点（3–5 路并行）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, modern flat vector, white background.
-Layout: a gauge / speedometer showing parallelism levels from 1 to 10.
-Highlight the green sweet spot at “3–5”.
-Add small visual metaphor: 3–5 worker agents collaborating with a human “driver” at a control panel, with clear task lanes.
-Big headline: “并行不是越多越好：3–5 路最稳”
-No dense text; emphasize the gauge and lanes.
-</code></pre></article></section>
-<section class="section" id="sec-07"><h2>Prompt 8：总结表格（Key Takeaways Table）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="8" href="#"><img class="slide-img" data-slide="8" alt="Slide 08｜总结表格（Key Takeaways Table）" loading="lazy" /></a><figcaption>Slide 08｜总结表格（Key Takeaways Table）</figcaption></figure><blockquote>
-<p>说明：文生图画表格容易乱码。这里给 <strong>“表格框架版”</strong>（推荐），你后期把文字粘进 PPT。</p>
-</blockquote>
-<pre><code class="language-text">16:9 PPT slide, 1920x1080, clean minimal table design, white background, teal/navy accents, thin grid lines.
+Keep labels short and big; no tiny footnotes.</pre></details></figure><p>在前面这些基础上，我慢慢看到了一个更完整的模式。</p>
+<p>这个模式可以写成一句话：</p>
+<p><strong>Spec → Work → Report → New Spec</strong></p>
+<p>也就是说，一个 agent 的工作流，不应该被理解成“我下一个命令，它干一次活”。
+更合理的理解是：</p>
+<ul>
+<li>我先给一个 spec</li>
+<li>它基于 spec 展开长时间工作</li>
+<li>工作结束后产出 report</li>
+<li>我根据 report 修正 spec</li>
+<li>然后进入下一轮</li>
+</ul>
+<p>这个循环一旦跑起来，你会发现它和很多高层次的人类活动其实非常相似。
+比如科研、论文发表、工程设计，甚至产品迭代，本质上都有这个结构。</p>
+<p>先基于已有知识提出问题，
+然后做实验、做实现、做比较，
+最后把发现整理出来，
+再用这些发现定义下一轮问题。</p>
+<p>我觉得这点特别重要，因为它意味着：</p>
+<p><strong>agent workflow 的价值，不只是执行，更是加速“认知迭代”。</strong></p>
+<p>很多时候，我们以为 agent 在帮我们省体力，
+但更深层地看，它其实是在帮我们加快从“模糊想法”到“明确判断”的速度。</p>
+<p>而当这个速度变快之后，开发和研究的尺度都会变。</p>
+<p>你原来可能一年只能认真验证几个想法，
+现在可能一个月就能过很多轮。
+原来你脑子里有一大堆积压的点子，因为没有足够执行力，所以长期停在想法层；
+现在这些点子终于可以真正被送入实验和反馈循环。</p>
+<p>这会带来巨大的正面效果，但也会带来新的负担。</p>
+<hr></article></section>
+<section class="section" id="sec-07"><h2>九、Agent 时代的“快乐的悲伤”：想法队列终于开始被清空</h2><article class="notes"><p>这一点我想稍微讲得个人一点。</p>
+<p>我最近一个非常强烈的体验是：
+<strong>这些 agent 正在帮我快速清空脑子里积压多年的 idea queue。</strong></p>
+<p>这是一个很奇特的感受。
+一方面，它是快乐的，因为你终于有机会让很多过去只能停留在脑中的想法，真正被拿去尝试。
+你给 agent 一个 spec，它去做，它回来给你一个 report。
+你再看，再想，再发起下一轮。
+你会感到一种以前不太可能出现的高频反馈感。</p>
+<p>但另一方面，这又是有点悲伤的。
+因为一旦你有了这种能力，脑子就会持续高速运转。
+你会不断地：</p>
+<ul>
+<li>想下一个点子</li>
+<li>看当前结果</li>
+<li>判断是否值得继续</li>
+<li>总结失败</li>
+<li>再重新排优先级</li>
+</ul>
+<p>这会让人持续处于一种“认知负荷很满”的状态。
+你不再是“没有机会试”，而是变成了“试得过来吗，承受得住吗”。</p>
+<p>而且我们都知道，大多数想法最后都不会成功。
+这一点在有了 agent 之后并不会改变。
+它改变的只是：你现在可以更快地知道哪些想法不行。</p>
+<p>这很好，因为它提升了学习率。
+但它也很消耗，因为你会更密集地接触失败反馈。</p>
+<p>所以我现在觉得，agent 时代对人的要求，其实不只是技术要求，还有心理和体力要求。</p>
+<p>你需要准备的不只是：</p>
+<ul>
+<li>prompt 怎么写</li>
+<li>工具怎么接</li>
+<li>机器怎么配</li>
+</ul>
+<p>你还要准备：</p>
+<ul>
+<li>如何接受高频失败</li>
+<li>如何维护自己的能量</li>
+<li>如何不被源源不断的可能性压垮</li>
+<li>如何给自己的想法做优先级排序</li>
+</ul>
+<p>换句话说：</p>
+<p><strong>过去的问题，是想法多、执行少；
+现在的问题，是想法很多终于能执行了，但你的注意力、精力和判断力成了新的瓶颈。</strong></p>
+<p>所以这最终会变成一个 priority queue 问题。
+不是“有没有想法”，而是“先试哪个”。</p>
+<hr></article></section>
+<section class="section" id="sec-10"><h2>十、它为什么让我想起人类论文发表和科研社区</h2><article class="notes"><p>讲到这里，我想说一个我最近觉得特别有意思的类比。</p>
+<p>我越来越觉得，agent-human 的协作闭环，和人类科研共同体的工作方式，有一种非常 striking 的相似性。</p>
+<p>人类做研究，大致也是这样：</p>
+<p>先读已有材料，
+再定义问题，
+再做实验，
+再形成结果，
+再写成报告或论文，
+然后整个社区继续基于这些产物往下走。</p>
+<p>在这里，论文不是终点，而是下一轮工作的起点。
+每一轮发表，既是结论，也是素材。</p>
+<p>而 agent workflow 现在给我的感觉也是这样：</p>
+<ul>
+<li>spec 像研究问题定义</li>
+<li>执行像实验与验证</li>
+<li>report 像阶段性论文</li>
+<li>下一轮 spec 像后续研究提案</li>
+</ul>
+<p>这意味着什么？</p>
+<p>这意味着 agent 并不只是一个“替你打字的助手”，
+它更像是在帮你加速构造一个微型研究共同体。
+你和 agent 之间，不断地在：</p>
+<ul>
+<li>提炼问题</li>
+<li>试验方案</li>
+<li>积累工件</li>
+<li>提高认知</li>
+</ul>
+<p>而且这个过程是可扩展的。
+一旦 report 发现了真正的瓶颈，比如数据不够、资源不足、某个设计空间还没扫完，那么你就可以顺势放大规模：</p>
+<ul>
+<li>增加数据量</li>
+<li>增加实验轮次</li>
+<li>增加机器数量</li>
+<li>增加候选方法</li>
+<li>增加上下文质量</li>
+</ul>
+<p>也就是说，<strong>你不是盲目扩张，而是根据上一轮报告中显露出的限制因素来扩张。</strong></p>
+<p>这个逻辑，和科研里“发现瓶颈—扩大样本—修正方法—重新验证”的过程，几乎是一致的。</p>
+<hr></article></section>
+<section class="section" id="sec-11"><h2>十一、我的阶段性结论：我们真正需要的，是一种新的研发秩序</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="8" href="#"><img class="slide-img" data-slide="8" alt="Slide 08｜总结表格（Key Takeaways Table）" loading="lazy" /></a><figcaption>Slide 08｜总结表格（Key Takeaways Table）</figcaption><details class="prompt"><summary>Prompt</summary><pre>16:9 PPT slide, 1920x1080, clean minimal table design, white background, teal/navy accents, thin grid lines.
 Layout: title on top “要点速览”.
 Below: a 3-column table with 8 rows, but DO NOT put long text inside cells; instead put short placeholders like:
 Column headers (big): “主题 | 观察 | 落地动作”
 Cells use placeholders like “（填入）” to avoid garbled text.
 Add small icons in the first column rows (timer, blocks, terminal, documents, loop, gauge, disk, checklist).
-Leave generous padding and consistent alignment.
-</code></pre></article></section>
+Leave generous padding and consistent alignment.</pre></details></figure><p>所以，如果要我用一句话总结这几天的体会，我会这样说：</p>
+<p><strong>Agentic workflow 的核心，不是把任务交给 AI，而是构造一种新的研发秩序。</strong></p>
+<p>在这种秩序里：</p>
+<ul>
+<li>速度来自低摩擦的周转</li>
+<li>质量来自清晰的规格</li>
+<li>持续性来自结构化报告</li>
+<li>适应性来自上下文工程</li>
+<li>放大能力来自有限而有效的并行</li>
+<li>稳定性来自人类对资源和方向的把控</li>
+</ul>
+<p>也就是说，决定成败的，不只是“模型能力”，而是下面这些东西有没有被认真组织：</p>
+<ol>
+<li>任务是否适合文本化</li>
+<li>核心逻辑是否能先脱离 GUI</li>
+<li>规格是否足够清晰、足够模块化</li>
+<li>上下文是否被整理成 agent 可消费的形式</li>
+<li>输出是否沉淀为可继承的报告</li>
+<li>远程与分布式环境是否低摩擦</li>
+<li>并行是否建立在真实依赖切分上</li>
+<li>人类是否做好了优先级和资源管理</li>
+</ol>
+<p>这其实很像软件工程、科研方法和系统工程的一次合流。
+只不过现在，多了一个新的协作对象：agent。</p>
+<hr></article></section>
+<section class="section" id="sec-12"><h2>十二、结尾：未来不是“有没有 agent”，而是“有没有方法”</h2><article class="notes"><p>最后，我想用一个比较平实的结论收尾。</p>
+<p>我现在越来越不觉得，未来的竞争会简单落在“谁先用上 agent”。
+因为 agent 本身会越来越普及，模型能力也会持续提升。</p>
+<p>真正拉开差距的，恐怕是：</p>
+<p><strong>谁更早形成了一套成熟的 agentic working method。</strong></p>
+<p>也就是：</p>
+<ul>
+<li>你能不能把任务组织对</li>
+<li>你能不能把上下文整理对</li>
+<li>你能不能把报告沉淀对</li>
+<li>你能不能把并行开得恰到好处</li>
+<li>你能不能在高频反馈和高密度失败中，保持判断力和节奏感</li>
+</ul>
+<p>说到底，agent 不会替我们免除思考，
+它只是把思考的外延拉大了，把实验的门槛降低了，把反馈的周期缩短了。</p>
+<p>这是一种非常强大的能力。
+但它也要求我们成长出新的习惯、新的纪律和新的心理准备。</p>
+<p>以前我们的问题是：
+<strong>很多想法只能停在脑中。</strong></p>
+<p>现在我们的问题是：
+<strong>很多想法终于能被执行了，那我们如何决定先执行什么，并且如何承受快速反馈带来的认知压力。</strong></p>
+<p>所以我想，也许 agent 时代真正的新课题，不只是更强的自动化，
+而是更成熟的判断、更清晰的结构、以及更有韧性的节奏管理。</p>
+<p>谢谢大家。</p>
+<hr></article></section>
+<section class="section" id="sec-13"><h2>可直接用于演讲的简短结束语</h2><article class="notes"><p>各位，今天我的分享本质上只想说明一件事：</p>
+<p><strong>Agentic workflow 不是一个工具技巧问题，而是一个工作流设计问题。</strong>
+当我们把 spec、context、report、parallelism 和 resource management 组织起来以后，agent 才真正从“会回答问题的模型”变成“能参与生产的协作者”。</p>
+<p>而这一切，才刚刚开始。</p>
+<p>最后给一个很朴素但实用的心智模型（帮助你把“多轮迭代”当成一门工程）：</p>
+<p>总迭代时间：</p>
+<p>$$
+T_{\text{total}} = t_{\text{iter}} \times N
+$$</p>
+<p>效果/产出（示意）：</p>
+<p>$$
+E(N) \approx \left(\Delta - \beta\,(N-1)\right)^{N}
+$$</p>
+<p>直觉是：N 增加时，E(N) 往往先升后降——早期吃到复利（Δ），后期被多轮劣化拖累（β）。
+所以我们的目标不是无限迭代，而是尽量把单轮成本 t_iter 压到最低，用最小代价尽快摸到峰值 N*。</p>
+<p>谢谢大家。</p></article></section>
 
       <footer>
-        <div>输入：prompts2/prompts.md · prompts2/images/manifest.json</div>
+        <div>输入：prompts2/talk.md · prompts2/prompts.md · prompts2/images/manifest.json</div>
         <div>提示：点击 slide 图片可在新标签页打开原图</div>
       </footer>
     </main>
