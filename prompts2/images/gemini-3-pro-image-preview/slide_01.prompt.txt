@@ -1,0 +1,7 @@
+16:9 PPT slide, 1920x1080, clean modern tech style, white background with subtle light-gray grid texture, accent colors teal and navy, flat vector illustration.
+Layout: large title area centered, minimalist geometric shapes, small flowing “agent nodes” network pattern in the background (dots connected by thin lines).
+Add only big Chinese title text (no small text):
+“Agentic Workflow 方法论”
+Below it, smaller subtitle:
+“规格驱动 · 上下文增强 · 报告闭环 · 有限并行 · 资源感知”
+Use Chinese sans-serif typography (Source Han Sans / 思源黑体 feel), high legibility, lots of whitespace.

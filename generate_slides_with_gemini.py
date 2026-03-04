@@ -29,8 +29,9 @@ DEFAULT_MODELS = [
 
 AGENTS_PROMPT_REGEX = re.compile(r'^\s*“(生成一张[\s\S]*?)”\s*$', flags=re.MULTILINE)
 PROMPTS_MD_SECTION_REGEX = re.compile(
-    r"^##\s*Prompt\s*(\d+)(?:\s*[|｜]\s*(.+?))?\s*$", flags=re.MULTILINE
+    r"^##\s*Prompt\s*(\d+)\s*(?:[|｜:：]\s*(.+?))?\s*$", flags=re.MULTILINE
 )
+FENCED_CODE_BLOCK_REGEX = re.compile(r"```[^\n]*\n([\s\S]*?)\n```", flags=re.MULTILINE)
 
 
 @dataclass(frozen=True)
@@ -89,6 +90,13 @@ def _strip_leading_trailing_md_separators(text: str) -> str:
     return "\n".join(lines).strip()
 
 
+def _extract_prompt_text_from_section(body_md: str) -> str:
+    m = FENCED_CODE_BLOCK_REGEX.search(body_md)
+    if m:
+        return m.group(1).strip()
+    return body_md.strip()
+
+
 def _extract_prompts_from_prompts_md(text: str) -> list[SlidePrompt]:
     matches = list(PROMPTS_MD_SECTION_REGEX.finditer(text))
     if not matches:
@@ -103,11 +111,15 @@ def _extract_prompts_from_prompts_md(text: str) -> list[SlidePrompt]:
 
         start = m.end()
         end = matches[idx + 1].start() if idx + 1 < len(matches) else len(text)
-        body = _strip_leading_trailing_md_separators(text[start:end])
-        if not body:
+        body_md = _strip_leading_trailing_md_separators(text[start:end])
+        if not body_md:
             raise SystemExit(f"Empty prompt body for Prompt {slide_no}.")
 
-        prompts.append(SlidePrompt(slide=slide_no, title=title, prompt=body))
+        prompt_text = _extract_prompt_text_from_section(body_md)
+        if not prompt_text:
+            raise SystemExit(f"Empty prompt text for Prompt {slide_no}.")
+
+        prompts.append(SlidePrompt(slide=slide_no, title=title, prompt=prompt_text))
 
     slides = [p.slide for p in prompts]
     if len(set(slides)) != len(slides):

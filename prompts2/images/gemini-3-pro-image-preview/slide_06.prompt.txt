@@ -1,0 +1,9 @@
+16:9 PPT slide, 1920x1080, crisp vector loop diagram, white background, teal/navy accents.
+Layout: a large horizontal pipeline loop:
+Box 1: “Spec v1”
+Box 2: “长任务/实验”
+Box 3: “Report（分节）”
+Box 4: “Spec v2 / v3”
+Arrows connect as a continuous cycle; add a small “版本号上升” upward arrow on the side.
+Big headline: “用报告驱动下一版规格”
+Keep labels short and big; no tiny footnotes.

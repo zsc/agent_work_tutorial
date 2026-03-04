@@ -1,0 +1,6 @@
+16:9 PPT slide, 1920x1080, modern flat vector, white background.
+Layout: a gauge / speedometer showing parallelism levels from 1 to 10.
+Highlight the green sweet spot at “3–5”.
+Add small visual metaphor: 3–5 worker agents collaborating with a human “driver” at a control panel, with clear task lanes.
+Big headline: “并行不是越多越好：3–5 路最稳”
+No dense text; emphasize the gauge and lanes.

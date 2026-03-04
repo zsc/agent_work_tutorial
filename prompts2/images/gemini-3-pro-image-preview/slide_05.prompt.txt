@@ -1,0 +1,5 @@
+16:9 PPT slide, 1920x1080, flat vector, white background with subtle paper texture.
+Layout: right side “context bundle” illustration: a stack of documents labeled “Markdown 文档”, “芯片/开发板资料”, “工具链源码”, “示例代码”.
+Left side: a friendly robot/agent icon with a “reading” posture, arrows from the document stack to the agent brain.
+Big headline: “Context Programming：给 agent 铺认知地基”
+No small paragraphs; leave a blank text box area for later overlay.

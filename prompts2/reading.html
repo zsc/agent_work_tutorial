@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>prompts2</title>
+    <style>
+      :root {
+        --bg: #0b0d12;
+        --fg: #e9eef7;
+        --muted: #a9b4c6;
+        --card: #111522;
+        --border: rgba(255,255,255,0.10);
+        --accent: #2f6bff;
+        --code: #0f172a;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #ffffff;
+          --fg: #0b1220;
+          --muted: #5b667a;
+          --card: #f7f8fb;
+          --border: rgba(11,18,32,0.12);
+          --accent: #2f6bff;
+          --code: #0b1220;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+          "Segoe UI Emoji";
+        line-height: 1.6;
+        background: var(--bg);
+        color: var(--fg);
+      }
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        backdrop-filter: blur(10px);
+        background: color-mix(in srgb, var(--bg) 88%, transparent);
+        border-bottom: 1px solid var(--border);
+      }
+      .container {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      .topbar {
+        display: flex;
+        gap: 16px;
+        align-items: baseline;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 2px;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .control select {
+        margin-left: 6px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--fg);
+        border-radius: 8px;
+        padding: 6px 10px;
+      }
+      nav.toc {
+        margin: 18px 0 8px;
+        padding: 14px 14px 10px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+      }
+      nav.toc h2 {
+        font-size: 14px;
+        margin: 0 0 6px;
+        color: var(--muted);
+      }
+      nav.toc ol {
+        margin: 0;
+        padding-left: 18px;
+      }
+      nav.toc li {
+        margin: 4px 0;
+      }
+      .section {
+        margin: 18px 0;
+        padding: 16px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+      }
+      .section h2 {
+        margin: 0 0 12px;
+        font-size: 16px;
+      }
+      figure.slide {
+        margin: 0;
+        padding: 12px;
+        background: color-mix(in srgb, var(--bg) 92%, transparent);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        float: right;
+        width: min(588px, 62%);
+        margin: 0 0 12px 16px;
+      }
+      figure.slide img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--bg) 86%, transparent);
+      }
+      figure.slide figcaption {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      details.prompt {
+        margin-top: 10px;
+      }
+      details.prompt summary {
+        cursor: pointer;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      details.prompt pre {
+        margin: 10px 0 0;
+        padding: 12px;
+        border-radius: 12px;
+        overflow: auto;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--bg) 92%, transparent);
+        color: var(--fg);
+        font-size: 12px;
+        line-height: 1.55;
+        white-space: pre-wrap;
+      }
+      article.notes {
+        padding: 4px 2px;
+      }
+      article.notes::after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+      article.notes p {
+        margin: 0 0 12px;
+      }
+      article.notes hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 16px 0;
+      }
+      article.notes code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 0.92em;
+        padding: 0.1em 0.35em;
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--bg) 86%, transparent);
+        border: 1px solid var(--border);
+      }
+      article.notes pre code {
+        display: block;
+        padding: 12px;
+        overflow: auto;
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--bg) 92%, transparent);
+      }
+      article.notes h3 {
+        margin: 16px 0 10px;
+        font-size: 14px;
+        color: var(--fg);
+      }
+      @media (max-width: 920px) {
+        figure.slide {
+          float: none;
+          width: 100%;
+          margin: 0 0 12px 0;
+        }
+      }
+      footer {
+        color: var(--muted);
+        font-size: 12px;
+        padding: 18px 0 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container topbar">
+        <div>
+          <h1>prompts2</h1>
+          <div class="meta">generated_at: 2026-03-04T10:31:33.589024+00:00</div>
+        </div>
+        <div class="controls">
+          
+          <a href="#sec-00">开始</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <nav class="toc">
+        <h2>目录</h2>
+        <ol>
+          <li><a href="#sec-00">Prompt 1：封面（Cover）</a></li>
+<li><a href="#sec-01">Prompt 2：第一性指标——周转时间（Turnaround Time）</a></li>
+<li><a href="#sec-02">Prompt 3：规格模块化 > 代码复用（Spec > Code）</a></li>
+<li><a href="#sec-03">Prompt 4：先文本内核，后 GUI 薄层（CLI-first, GUI-last）</a></li>
+<li><a href="#sec-04">Prompt 5：Context Programming / 上下文工程（Docs + Code + Tools）</a></li>
+<li><a href="#sec-05">Prompt 6：闭环迭代（Spec → Work → Report → Next Spec）</a></li>
+<li><a href="#sec-06">Prompt 7：并行度甜蜜点（3–5 路并行）</a></li>
+<li><a href="#sec-07">Prompt 8：总结表格（Key Takeaways Table）</a></li>
+        </ol>
+      </nav>
+
+      <section class="section" id="sec-00"><h2>Prompt 1：封面（Cover）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="1" href="#"><img class="slide-img" data-slide="1" alt="Slide 01｜封面（Cover）" loading="lazy" /></a><figcaption>Slide 01｜封面（Cover）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, clean modern tech style, white background with subtle light-gray grid texture, accent colors teal and navy, flat vector illustration.
+Layout: large title area centered, minimalist geometric shapes, small flowing “agent nodes” network pattern in the background (dots connected by thin lines).
+Add only big Chinese title text (no small text):
+“Agentic Workflow 方法论”
+Below it, smaller subtitle:
+“规格驱动 · 上下文增强 · 报告闭环 · 有限并行 · 资源感知”
+Use Chinese sans-serif typography (Source Han Sans / 思源黑体 feel), high legibility, lots of whitespace.
+</code></pre></article></section>
+<section class="section" id="sec-01"><h2>Prompt 2：第一性指标——周转时间（Turnaround Time）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="2" href="#"><img class="slide-img" data-slide="2" alt="Slide 02｜第一性指标——周转时间（Turnaround Time）" loading="lazy" /></a><figcaption>Slide 02｜第一性指标——周转时间（Turnaround Time）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, flat vector, white background, teal/navy accents, minimalist icons.
+Layout: left side big headline, right side infographic.
+Right infographic: a circular loop diagram with 4 steps and arrows: “假设 → 执行 → 反馈 → 修正”, emphasize “周转时间” as a timer icon at the center.
+Add only big Chinese headline text on the left:
+“周转时间是第一性指标”
+Small supporting text area should be empty placeholders (no tiny text), leave space for speaker notes.
+</code></pre></article></section>
+<section class="section" id="sec-02"><h2>Prompt 3：规格模块化 > 代码复用（Spec > Code）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="3" href="#"><img class="slide-img" data-slide="3" alt="Slide 03｜规格模块化 > 代码复用（Spec > Code）" loading="lazy" /></a><figcaption>Slide 03｜规格模块化 > 代码复用（Spec > Code）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, clean vector infographic, white background, teal/navy accents.
+Layout: split into two vertical panels.
+Left panel labeled big: “复用代码（风险）” with a tangled spaghetti diagram + warning triangle icons.
+Right panel labeled big: “复用规格（友好）” with neat LEGO-like blocks labeled “目标/边界/约束/验收” stacked cleanly.
+Bottom center: a simple takeaway badge with big text “把复用上移到规格层”.
+Avoid dense paragraphs; only large Chinese labels, crisp icons.
+</code></pre></article></section>
+<section class="section" id="sec-03"><h2>Prompt 4：先文本内核，后 GUI 薄层（CLI-first, GUI-last）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="4" href="#"><img class="slide-img" data-slide="4" alt="Slide 04｜先文本内核，后 GUI 薄层（CLI-first, GUI-last）" loading="lazy" /></a><figcaption>Slide 04｜先文本内核，后 GUI 薄层（CLI-first, GUI-last）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, modern flat vector, white background.
+Layout: an MVC-inspired schematic.
+Center: a solid rectangle “文本内核（Model/Controller）” with terminal icon + test checkmarks.
+Around it: thin outer frame labeled “GUI/View 薄层” with simple window icon.
+Arrows show building order: first core, then wrap UI.
+Big headline top-left: “先做文本内核，后包 GUI 薄层”
+Keep text large, minimal, and correctly spaced.
+</code></pre></article></section>
+<section class="section" id="sec-04"><h2>Prompt 5：Context Programming / 上下文工程（Docs + Code + Tools）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="5" href="#"><img class="slide-img" data-slide="5" alt="Slide 05｜Context Programming / 上下文工程（Docs + Code + Tools）" loading="lazy" /></a><figcaption>Slide 05｜Context Programming / 上下文工程（Docs + Code + Tools）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, flat vector, white background with subtle paper texture.
+Layout: right side “context bundle” illustration: a stack of documents labeled “Markdown 文档”, “芯片/开发板资料”, “工具链源码”, “示例代码”.
+Left side: a friendly robot/agent icon with a “reading” posture, arrows from the document stack to the agent brain.
+Big headline: “Context Programming：给 agent 铺认知地基”
+No small paragraphs; leave a blank text box area for later overlay.
+</code></pre></article></section>
+<section class="section" id="sec-05"><h2>Prompt 6：闭环迭代（Spec → Work → Report → Next Spec）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="6" href="#"><img class="slide-img" data-slide="6" alt="Slide 06｜闭环迭代（Spec → Work → Report → Next Spec）" loading="lazy" /></a><figcaption>Slide 06｜闭环迭代（Spec → Work → Report → Next Spec）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, crisp vector loop diagram, white background, teal/navy accents.
+Layout: a large horizontal pipeline loop:
+Box 1: “Spec v1”
+Box 2: “长任务/实验”
+Box 3: “Report（分节）”
+Box 4: “Spec v2 / v3”
+Arrows connect as a continuous cycle; add a small “版本号上升” upward arrow on the side.
+Big headline: “用报告驱动下一版规格”
+Keep labels short and big; no tiny footnotes.
+</code></pre></article></section>
+<section class="section" id="sec-06"><h2>Prompt 7：并行度甜蜜点（3–5 路并行）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="7" href="#"><img class="slide-img" data-slide="7" alt="Slide 07｜并行度甜蜜点（3–5 路并行）" loading="lazy" /></a><figcaption>Slide 07｜并行度甜蜜点（3–5 路并行）</figcaption></figure><pre><code class="language-text">16:9 PPT slide, 1920x1080, modern flat vector, white background.
+Layout: a gauge / speedometer showing parallelism levels from 1 to 10.
+Highlight the green sweet spot at “3–5”.
+Add small visual metaphor: 3–5 worker agents collaborating with a human “driver” at a control panel, with clear task lanes.
+Big headline: “并行不是越多越好：3–5 路最稳”
+No dense text; emphasize the gauge and lanes.
+</code></pre></article></section>
+<section class="section" id="sec-07"><h2>Prompt 8：总结表格（Key Takeaways Table）</h2><article class="notes"><figure class="slide"><a class="slide-link" data-slide-link="8" href="#"><img class="slide-img" data-slide="8" alt="Slide 08｜总结表格（Key Takeaways Table）" loading="lazy" /></a><figcaption>Slide 08｜总结表格（Key Takeaways Table）</figcaption></figure><blockquote>
+<p>说明：文生图画表格容易乱码。这里给 <strong>“表格框架版”</strong>（推荐），你后期把文字粘进 PPT。</p>
+</blockquote>
+<pre><code class="language-text">16:9 PPT slide, 1920x1080, clean minimal table design, white background, teal/navy accents, thin grid lines.
+Layout: title on top “要点速览”.
+Below: a 3-column table with 8 rows, but DO NOT put long text inside cells; instead put short placeholders like:
+Column headers (big): “主题 | 观察 | 落地动作”
+Cells use placeholders like “（填入）” to avoid garbled text.
+Add small icons in the first column rows (timer, blocks, terminal, documents, loop, gauge, disk, checklist).
+Leave generous padding and consistent alignment.
+</code></pre></article></section>
+
+      <footer>
+        <div>输入：prompts2/prompts.md · prompts2/images/manifest.json</div>
+        <div>提示：点击 slide 图片可在新标签页打开原图</div>
+      </footer>
+    </main>
+
+    <script>
+      const IMAGE_MAP = {"models/gemini-3-pro-image-preview": {"1": {"src": "images/gemini-3-pro-image-preview/slide_01.jpg", "mime": "image/jpeg", "prompt_title": "封面（Cover）"}, "2": {"src": "images/gemini-3-pro-image-preview/slide_02.jpg", "mime": "image/jpeg", "prompt_title": "第一性指标——周转时间（Turnaround Time）"}, "3": {"src": "images/gemini-3-pro-image-preview/slide_03.jpg", "mime": "image/jpeg", "prompt_title": "规格模块化 > 代码复用（Spec > Code）"}, "4": {"src": "images/gemini-3-pro-image-preview/slide_04.jpg", "mime": "image/jpeg", "prompt_title": "先文本内核，后 GUI 薄层（CLI-first, GUI-last）"}, "5": {"src": "images/gemini-3-pro-image-preview/slide_05.jpg", "mime": "image/jpeg", "prompt_title": "Context Programming / 上下文工程（Docs + Code + Tools）"}, "6": {"src": "images/gemini-3-pro-image-preview/slide_06.jpg", "mime": "image/jpeg", "prompt_title": "闭环迭代（Spec → Work → Report → Next Spec）"}, "7": {"src": "images/gemini-3-pro-image-preview/slide_07.jpg", "mime": "image/jpeg", "prompt_title": "并行度甜蜜点（3–5 路并行）"}, "8": {"src": "images/gemini-3-pro-image-preview/slide_08.jpg", "mime": "image/jpeg", "prompt_title": "总结表格（Key Takeaways Table）"}}};
+      const DEFAULT_MODEL = "models/gemini-3-pro-image-preview";
+
+      function setModel(modelName) {
+        document.querySelectorAll('img[data-slide]').forEach((img) => {
+          const slide = img.dataset.slide;
+          const info = IMAGE_MAP?.[modelName]?.[slide];
+          if (!info) return;
+          img.src = info.src;
+        });
+        document.querySelectorAll('a[data-slide-link]').forEach((a) => {
+          const slide = a.dataset.slideLink;
+          const info = IMAGE_MAP?.[modelName]?.[slide];
+          if (!info) return;
+          a.href = info.src;
+          a.target = '_blank';
+          a.rel = 'noopener';
+        });
+      }
+
+      const select = document.getElementById('modelSelect');
+      if (select) {
+        select.addEventListener('change', (e) => setModel(e.target.value));
+      }
+      setModel(select ? select.value : DEFAULT_MODEL);
+    </script>
+  </body>
+</html>

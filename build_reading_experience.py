@@ -14,8 +14,9 @@ import markdown
 
 
 PROMPTS_MD_SECTION_REGEX = re.compile(
-    r"^##\s*Prompt\s*(\d+)(?:\s*[|｜]\s*(.+?))?\s*$", flags=re.MULTILINE
+    r"^##\s*Prompt\s*(\d+)\s*(?:[|｜:：]\s*(.+?))?\s*$", flags=re.MULTILINE
 )
+FENCED_CODE_BLOCK_REGEX = re.compile(r"```[^\n]*\n([\s\S]*?)\n```", flags=re.MULTILINE)
 
 SECTION_NUM_TO_SLIDE: dict[str, int] = {
     "一": 2,
@@ -36,6 +37,7 @@ class PromptInfo:
     slide: int
     title: str
     prompt: str
+    body_md: str
 
 
 @dataclass(frozen=True)
@@ -75,12 +77,16 @@ def parse_prompts_md(path: Path) -> dict[int, PromptInfo]:
         title = (m.group(2) or f"Prompt {slide_no}").strip()
         start = m.end()
         end = matches[idx + 1].start() if idx + 1 < len(matches) else len(text)
-        body = _strip_leading_trailing_md_separators(text[start:end])
-        if not body:
+        body_md = _strip_leading_trailing_md_separators(text[start:end])
+        if not body_md:
             raise SystemExit(f"Empty prompt body for Prompt {slide_no} in {path}.")
+        m_code = FENCED_CODE_BLOCK_REGEX.search(body_md)
+        prompt_text = m_code.group(1).strip() if m_code else body_md.strip()
+        if not prompt_text:
+            raise SystemExit(f"Empty prompt text for Prompt {slide_no} in {path}.")
         if slide_no in prompts:
             raise SystemExit(f"Duplicate Prompt {slide_no} in {path}.")
-        prompts[slide_no] = PromptInfo(slide=slide_no, title=title, prompt=body)
+        prompts[slide_no] = PromptInfo(slide=slide_no, title=title, prompt=prompt_text, body_md=body_md)
     return prompts
 
 
@@ -203,6 +209,11 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--out", type=Path, default=Path("reading.html"), help="Output HTML path (default: reading.html).")
     parser.add_argument("--model", type=str, default=None, help="Model name to use by default (must exist in manifest).")
     parser.add_argument(
+        "--no-talk",
+        action="store_true",
+        help="Build prompts-only reading page (ignore talk.md).",
+    )
+    parser.add_argument(
         "--embed-images",
         action=argparse.BooleanOptionalAction,
         default=False,
@@ -210,15 +221,28 @@ def main(argv: list[str]) -> int:
     )
     args = parser.parse_args(argv)
 
-    if not args.talk.exists():
-        raise SystemExit(f"Missing {args.talk}.")
     if not args.prompts.exists():
         raise SystemExit(f"Missing {args.prompts}.")
     if not args.manifest.exists():
         raise SystemExit(f"Missing {args.manifest}. Run generate_slides_with_gemini.py first.")
 
     prompts = parse_prompts_md(args.prompts)
-    title, sections = parse_talk_md(args.talk)
+    use_talk = not args.no_talk
+    if use_talk:
+        if not args.talk.exists():
+            raise SystemExit(f"Missing {args.talk}. Pass --no-talk to build prompts-only reading page.")
+        title, sections = parse_talk_md(args.talk)
+    else:
+        title = args.prompts.parent.name if args.prompts.parent.name else args.prompts.stem
+        sections = [
+            TalkSection(
+                anchor=f"sec-{i:02d}",
+                heading=f"Prompt {p.slide}：{p.title}" if p.title else f"Prompt {p.slide}",
+                body_md=p.body_md,
+                slide=p.slide,
+            )
+            for i, p in enumerate([prompts[k] for k in sorted(prompts.keys())], start=0)
+        ]
     manifest = load_manifest(args.manifest)
 
     models, default_model, image_map = build_image_map(
@@ -243,7 +267,7 @@ def main(argv: list[str]) -> int:
             prompt = prompts.get(sec.slide)
             caption = f"Slide {sec.slide:02d}" + (f"｜{prompt.title}" if prompt and prompt.title else "")
             prompt_details = ""
-            if prompt and prompt.prompt:
+            if use_talk and prompt and prompt.prompt:
                 prompt_details = (
                     "<details class=\"prompt\"><summary>Prompt</summary>"
                     f"<pre>{prompt.prompt}</pre></details>"
@@ -280,6 +304,14 @@ def main(argv: list[str]) -> int:
         if len(models) > 1 and not args.embed_images
         else ""
     )
+
+    start_anchor = sections[0].anchor if sections else ""
+    start_link_html = f'<a href="#{start_anchor}">开始</a>' if start_anchor else ""
+
+    inputs = [str(args.prompts), str(args.manifest)]
+    if use_talk:
+        inputs.insert(0, str(args.talk))
+    inputs_str = " · ".join(inputs)
 
     html = f"""<!doctype html>
 <html lang="zh-Hans">
@@ -496,7 +528,7 @@ def main(argv: list[str]) -> int:
         </div>
         <div class="controls">
           {model_selector_html}
-          <a href="#sec-00">开场</a>
+          {start_link_html}
         </div>
       </div>
     </header>
@@ -512,7 +544,7 @@ def main(argv: list[str]) -> int:
       {sections_html}
 
       <footer>
-        <div>输入：{args.talk} · {args.prompts} · {args.manifest}</div>
+        <div>输入：{inputs_str}</div>
         <div>提示：点击 slide 图片可在新标签页打开原图</div>
       </footer>
     </main>

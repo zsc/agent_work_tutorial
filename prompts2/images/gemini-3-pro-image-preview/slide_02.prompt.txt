@@ -1,0 +1,6 @@
+16:9 PPT slide, 1920x1080, flat vector, white background, teal/navy accents, minimalist icons.
+Layout: left side big headline, right side infographic.
+Right infographic: a circular loop diagram with 4 steps and arrows: “假设 → 执行 → 反馈 → 修正”, emphasize “周转时间” as a timer icon at the center.
+Add only big Chinese headline text on the left:
+“周转时间是第一性指标”
+Small supporting text area should be empty placeholders (no tiny text), leave space for speaker notes.

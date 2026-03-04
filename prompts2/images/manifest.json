@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-03-04T10:31:33.589024+00:00",
+  "prompts_path": "prompts2/prompts.md",
+  "prompt_format": "prompts_md",
+  "prompt_count": 8,
+  "models": [
+    {
+      "name": "models/gemini-3-pro-image-preview",
+      "dir": "prompts2/images/gemini-3-pro-image-preview"
+    }
+  ],
+  "slides": [
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 1,
+      "image_path": "prompts2/images/gemini-3-pro-image-preview/slide_01.jpg",
+      "prompt_path": "prompts2/images/gemini-3-pro-image-preview/slide_01.prompt.txt",
+      "prompt_title": "封面（Cover）",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 2,
+      "image_path": "prompts2/images/gemini-3-pro-image-preview/slide_02.jpg",
+      "prompt_path": "prompts2/images/gemini-3-pro-image-preview/slide_02.prompt.txt",
+      "prompt_title": "第一性指标——周转时间（Turnaround Time）",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 3,
+      "image_path": "prompts2/images/gemini-3-pro-image-preview/slide_03.jpg",
+      "prompt_path": "prompts2/images/gemini-3-pro-image-preview/slide_03.prompt.txt",
+      "prompt_title": "规格模块化 > 代码复用（Spec > Code）",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 4,
+      "image_path": "prompts2/images/gemini-3-pro-image-preview/slide_04.jpg",
+      "prompt_path": "prompts2/images/gemini-3-pro-image-preview/slide_04.prompt.txt",
+      "prompt_title": "先文本内核，后 GUI 薄层（CLI-first, GUI-last）",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 5,
+      "image_path": "prompts2/images/gemini-3-pro-image-preview/slide_05.jpg",
+      "prompt_path": "prompts2/images/gemini-3-pro-image-preview/slide_05.prompt.txt",
+      "prompt_title": "Context Programming / 上下文工程（Docs + Code + Tools）",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 6,
+      "image_path": "prompts2/images/gemini-3-pro-image-preview/slide_06.jpg",
+      "prompt_path": "prompts2/images/gemini-3-pro-image-preview/slide_06.prompt.txt",
+      "prompt_title": "闭环迭代（Spec → Work → Report → Next Spec）",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 7,
+      "image_path": "prompts2/images/gemini-3-pro-image-preview/slide_07.jpg",
+      "prompt_path": "prompts2/images/gemini-3-pro-image-preview/slide_07.prompt.txt",
+      "prompt_title": "并行度甜蜜点（3–5 路并行）",
+      "mime_type": "image/jpeg"
+    },
+    {
+      "model": "models/gemini-3-pro-image-preview",
+      "slide": 8,
+      "image_path": "prompts2/images/gemini-3-pro-image-preview/slide_08.jpg",
+      "prompt_path": "prompts2/images/gemini-3-pro-image-preview/slide_08.prompt.txt",
+      "prompt_title": "总结表格（Key Takeaways Table）",
+      "mime_type": "image/jpeg"
+    }
+  ]
+}

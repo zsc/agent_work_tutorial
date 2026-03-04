@@ -1,0 +1,6 @@
+16:9 PPT slide, 1920x1080, clean vector infographic, white background, teal/navy accents.
+Layout: split into two vertical panels.
+Left panel labeled big: “复用代码（风险）” with a tangled spaghetti diagram + warning triangle icons.
+Right panel labeled big: “复用规格（友好）” with neat LEGO-like blocks labeled “目标/边界/约束/验收” stacked cleanly.
+Bottom center: a simple takeaway badge with big text “把复用上移到规格层”.
+Avoid dense paragraphs; only large Chinese labels, crisp icons.

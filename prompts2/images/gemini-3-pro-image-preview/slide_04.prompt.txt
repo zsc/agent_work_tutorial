@@ -1,0 +1,7 @@
+16:9 PPT slide, 1920x1080, modern flat vector, white background.
+Layout: an MVC-inspired schematic.
+Center: a solid rectangle “文本内核（Model/Controller）” with terminal icon + test checkmarks.
+Around it: thin outer frame labeled “GUI/View 薄层” with simple window icon.
+Arrows show building order: first core, then wrap UI.
+Big headline top-left: “先做文本内核，后包 GUI 薄层”
+Keep text large, minimal, and correctly spaced.

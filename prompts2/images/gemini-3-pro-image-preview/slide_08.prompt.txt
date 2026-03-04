@@ -1,0 +1,7 @@
+16:9 PPT slide, 1920x1080, clean minimal table design, white background, teal/navy accents, thin grid lines.
+Layout: title on top “要点速览”.
+Below: a 3-column table with 8 rows, but DO NOT put long text inside cells; instead put short placeholders like:
+Column headers (big): “主题 | 观察 | 落地动作”
+Cells use placeholders like “（填入）” to avoid garbled text.
+Add small icons in the first column rows (timer, blocks, terminal, documents, loop, gauge, disk, checklist).
+Leave generous padding and consistent alignment.
